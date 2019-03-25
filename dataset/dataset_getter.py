@@ -28,7 +28,6 @@ if __name__ == '__main__':
 
     # EXTRACTOR
     zip_files = glob.glob(settings.RAW_OUTPUT_PATH + '/*.zip')
-    print(zip_files)
     for file in zip_files:
         zip_extractor = ZipExtractor(file)
         zip_extractor.extract()
