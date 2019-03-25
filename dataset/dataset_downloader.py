@@ -27,9 +27,16 @@ class URLDownloader(Downloader):
         return True
 
     def download(self):
-        if self.is_url_downloadable():
+        file_name = self.url.split('/')[-1]
+        output_path = os.path.join(settings.RAW_OUTPUT_PATH, file_name)
+        if not self.is_url_downloadable():
+            print('Skipping \'%s\': not downloadable' % file_name)
+        elif os.path.exists(output_path):
+            print('Skipping \'%s\': already exist' % file_name)
+        else:
+            print('Downloading \'%s\' ...' % file_name)
             r = requests.get(self.url, allow_redirects=True)
-            open(os.path.join(settings.RAW_OUTPUT_PATH, self.url.split('/')[-1]), 'wb').write(r.content)
+            open(output_path, 'wb').write(r.content)
 
 
 if __name__ == '__main__':
