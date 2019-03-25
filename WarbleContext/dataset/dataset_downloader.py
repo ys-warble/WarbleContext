@@ -2,8 +2,8 @@ import os
 
 import requests
 
-import settings
-from dataset.source_parser import CasasParser
+from WarbleContext import settings
+from WarbleContext.dataset.source_parser import CasasParser
 
 
 class Downloader:

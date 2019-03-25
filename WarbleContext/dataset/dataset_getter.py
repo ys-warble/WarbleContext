@@ -1,9 +1,9 @@
 import glob
 
-import settings
-from dataset.dataset_downloader import URLDownloader
-from dataset.dataset_extractor import ZipExtractor
-from dataset.source_parser import CasasParser
+from WarbleContext import settings
+from WarbleContext.dataset.dataset_downloader import URLDownloader
+from WarbleContext.dataset.dataset_extractor import ZipExtractor
+from WarbleContext.dataset.source_parser import CasasParser
 
 if __name__ == '__main__':
     # SOURCE PARSER
