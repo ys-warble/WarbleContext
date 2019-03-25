@@ -3,7 +3,7 @@ import os
 import requests
 
 import settings
-from dataset.source_parser import CasasParser, A4HParser
+from dataset.source_parser import CasasParser
 
 
 class Downloader:
@@ -26,9 +26,13 @@ class URLDownloader(Downloader):
             return False
         return True
 
-    def download(self):
+    def download(self, directory=None):
         file_name = self.url.split('/')[-1]
-        output_path = os.path.join(settings.RAW_OUTPUT_PATH, file_name)
+        if directory is None:
+            output_path = os.path.join(settings.RAW_OUTPUT_PATH, file_name)
+        else:
+            output_path = directory
+
         if not self.is_url_downloadable():
             print('Skipping \'%s\': not downloadable' % file_name)
         elif os.path.exists(output_path):
