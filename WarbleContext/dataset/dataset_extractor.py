@@ -3,10 +3,11 @@ import zipfile
 
 
 class Extractor:
-    pass
+    def execute(self):
+        raise NotImplementedError
 
 
-class ZipExtractor:
+class ZipExtractor(Extractor):
     def __init__(self, input_path, output_path=None):
         self.input_path = input_path
         if output_path is None:
@@ -14,7 +15,7 @@ class ZipExtractor:
         else:
             self.output_path = output_path
 
-    def extract(self):
+    def execute(self):
         if os.path.exists(self.output_path) and len(os.listdir(self.output_path)) != 0:
             print('Skipping \'%s\': not empty' % os.path.basename(self.input_path))
         else:

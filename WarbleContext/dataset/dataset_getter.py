@@ -10,7 +10,7 @@ if __name__ == '__main__':
     sources = list()
     sources.append({
         'source': 'casas',
-        'datasets': CasasParser('http://casas.wsu.edu/datasets/').parse(),
+        'datasets': CasasParser('http://casas.wsu.edu/datasets/').execute(),
     })
     # sources.append({
     #     'source': 'A4H',
@@ -23,12 +23,12 @@ if __name__ == '__main__':
     for source in sources:
         for dataset in source['datasets']:
             urldownloader = URLDownloader(dataset['url'])
-            urldownloader.download()
+            urldownloader.execute()
     # END of DOWNLOADER
 
     # EXTRACTOR
     zip_files = glob.glob(settings.RAW_OUTPUT_PATH + '/*.zip')
     for file in zip_files:
         zip_extractor = ZipExtractor(file)
-        zip_extractor.extract()
+        zip_extractor.execute()
     # END of EXTRACTOR

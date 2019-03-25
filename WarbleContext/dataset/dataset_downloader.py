@@ -10,11 +10,15 @@ class Downloader:
     def __init__(self):
         pass
 
+    def execute(self):
+        raise NotImplementedError
+
 
 class URLDownloader(Downloader):
-    def __init__(self, url):
+    def __init__(self, url, directory=None):
         super().__init__()
         self.url = url
+        self.directory = directory
 
     def is_url_downloadable(self):
         h = requests.head(self.url, allow_redirects=True)
@@ -26,12 +30,12 @@ class URLDownloader(Downloader):
             return False
         return True
 
-    def download(self, directory=None):
+    def execute(self):
         file_name = self.url.split('/')[-1]
-        if directory is None:
+        if self.directory is None:
             output_path = os.path.join(settings.RAW_OUTPUT_PATH, file_name)
         else:
-            output_path = directory
+            output_path = self.directory
 
         if not self.is_url_downloadable():
             print('Skipping \'%s\': not downloadable' % file_name)
@@ -47,7 +51,7 @@ if __name__ == '__main__':
     sources = list()
     sources.append({
         'source': 'casas',
-        'datasets': CasasParser('http://casas.wsu.edu/datasets/').parse(),
+        'datasets': CasasParser('http://casas.wsu.edu/datasets/').execute(),
     })
     # sources.append({
     #     'source': 'A4H',
@@ -58,4 +62,4 @@ if __name__ == '__main__':
     for source in sources:
         for dataset in source['datasets']:
             urldownloader = URLDownloader(dataset['url'])
-            urldownloader.download()
+            urldownloader.execute()

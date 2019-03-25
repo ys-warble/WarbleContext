@@ -4,14 +4,15 @@ import pprint
 
 
 class SourceParser:
-    pass
+    def execute(self):
+        raise NotImplementedError
 
 
 class CasasParser(SourceParser):
     def __init__(self, url):
         self.url = url
 
-    def parse(self):
+    def execute(self):
         r = requests.get(self.url, allow_redirects=True)
         soup = BeautifulSoup(r.text, 'html.parser')
 
@@ -50,7 +51,7 @@ class A4HParser(SourceParser):
     def __init__(self, url):
         self.url = url
 
-    def parse(self):
+    def execute(self):
         r = requests.get(self.url, allow_redirects=True)
         soup = BeautifulSoup(r.text, 'html.parser')
         result = list()
@@ -78,10 +79,10 @@ if __name__ == '__main__':
     source = dict()
     # casas_parser = CasasParser('http://casas.wsu.edu/datasets/')
     # source['source'] = 'casas'
-    # source['datasets'] = casas_parser.parse()
+    # source['datasets'] = casas_parser.execute()
 
     a4h_parser = A4HParser('https://data.mendeley.com/datasets/fcj2hmz5kb/3#folder-b0444e4a-ba47-467e-8ec2-0b9e5c4dfc1f')
     source['source'] = 'A4H'
-    source['datasets'] = a4h_parser.parse()
+    source['datasets'] = a4h_parser.execute()
 
     pprint.pprint(source)
